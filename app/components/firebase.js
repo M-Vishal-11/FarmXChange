@@ -1,8 +1,8 @@
-// Import the functions you need from the SDKs you need
+// firebase.ts
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, useAuth } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
-// Your web app's Firebase configuration
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyA1rNYoA9WpqhIvYiXKOR_46lBb8OeM9fU",
   authDomain: "login-auth-3d3d7.firebaseapp.com",
@@ -12,9 +12,10 @@ const firebaseConfig = {
   appId: "1:706488208858:web:42ed09c58f9f71f37184e3",
 };
 
-// Initialize Firebase
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
-const auth = useAuth(app);
-const googleAuthProvider = new GoogleAuthProvider();
 
-export { auth, googleAuthProvider };
+// ✅ CORRECT: getAuth
+const auth = getAuth(app);
+
+export { auth };
