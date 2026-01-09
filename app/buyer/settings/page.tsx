@@ -35,7 +35,7 @@ export default function Page() {
   //Not Authenticated
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login?category=officer");
+      router.push("/login?category=buyer");
     }
   }, [user, loading, router]);
 
@@ -99,7 +99,7 @@ export default function Page() {
     try {
       await signOut(auth);
       toast.success("Logged out successfully 👋");
-      router.push("/login");
+      router.push("/login?category=buyer");
     } catch (err: any) {
       toast.error(err.message);
     }

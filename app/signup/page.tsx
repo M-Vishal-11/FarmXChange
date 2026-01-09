@@ -6,9 +6,16 @@ import toast from "react-hot-toast";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/components/firebase.js";
 import { updateProfile } from "firebase/auth";
+import { useSearchParams } from "next/navigation";
 
 export default function SignUpPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+  const capitalized = category
+    ? category.charAt(0).toUpperCase() + category.slice(1)
+    : "";
+
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
@@ -30,9 +37,6 @@ export default function SignUpPage() {
       toast.error("Password must be at least 6 characters");
       return;
     }
-
-    console.log({ name, email, password });
-
     const res = await createUserWithEmailAndPassword(email, password);
 
     if (res?.user) {
@@ -45,7 +49,7 @@ export default function SignUpPage() {
 
     console.log(res);
     toast.success("Account created successfully 🎉");
-    router.push("/login"); // or dashboard
+    router.push("/login"); // login
   };
 
   useEffect(() => {
@@ -86,7 +90,7 @@ export default function SignUpPage() {
             </label>
             <input
               type="text"
-              placeholder="Farmer Name"
+              placeholder={`${capitalized}`}
               className="w-full px-4 py-3 rounded-xl border border-green-300 outline-none focus:ring-2 focus:ring-green-500"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -99,7 +103,7 @@ export default function SignUpPage() {
             <label className="block text-green-800 text-sm mb-1">Email</label>
             <input
               type="email"
-              placeholder="farmer@example.com"
+              placeholder={`${category}@example.com`}
               className="w-full px-4 py-3 rounded-xl border border-green-300 outline-none focus:ring-2 focus:ring-green-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -153,7 +157,7 @@ export default function SignUpPage() {
           Already have an account?{" "}
           <button
             className="underline hover:text-green-900"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push(`/login?category=${category}`)}
           >
             Login
           </button>

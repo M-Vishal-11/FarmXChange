@@ -11,7 +11,7 @@ export default function Home() {
       <div className="flex flex-col md:flex-row gap-6">
         {/* Buyer */}
         <button
-          onClick={() => router.push("/buyer")}
+          onClick={() => router.push("/login?category=buyer")} //buyer
           className="group w-64 h-40 rounded-3xl bg-linear-to-br from-red-500 to-red-600 text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex flex-col items-center justify-center"
         >
           <ShoppingCart className="w-12 h-12 mb-3" />
@@ -20,7 +20,7 @@ export default function Home() {
 
         {/* Farmer */}
         <button
-          onClick={() => router.push("/farmer")}
+          onClick={() => router.push("/login?category=farmer")} //farmer
           className="group w-64 h-40 rounded-3xl bg-linear-to-br from-green-500 to-green-600 text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex flex-col items-center justify-center"
         >
           <Tractor className="w-12 h-12 mb-3" />
@@ -29,7 +29,7 @@ export default function Home() {
 
         {/* Agri Officer */}
         <button
-          onClick={() => router.push("/officer")}
+          onClick={() => router.push("/login?category=officer")} //officer
           className="group w-64 h-40 rounded-3xl bg-linear-to-br from-blue-500 to-blue-600 text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex flex-col items-center justify-center"
         >
           <ShieldCheck className="w-12 h-12 mb-3" />

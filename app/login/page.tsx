@@ -5,9 +5,13 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/components/firebase";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+  console.log(category);
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -19,8 +23,6 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
-
-    console.log({ email, password });
     await signInWithEmailAndPassword(email, password);
   };
 
@@ -29,7 +31,7 @@ export default function LoginPage() {
     if (user) {
       toast.success("Login successful 🎉");
       console.log(user);
-      // router.push("/dashboard");
+      router.push(`/${category}`);
     }
   }, [user, router]);
 
@@ -46,6 +48,9 @@ export default function LoginPage() {
         break;
       case "auth/invalid-credential":
         toast.error("Invalid email or password");
+        break;
+      case "auth/too-many-requests":
+        toast.error("User not found");
         break;
       default:
         toast.error(error.message);
@@ -71,7 +76,7 @@ export default function LoginPage() {
             <label className="block text-green-800 text-sm mb-1">Email</label>
             <input
               type="email"
-              placeholder="farmer@example.com"
+              placeholder={`${category}@example.com`}
               className="w-full px-4 py-3 rounded-xl border border-green-300 outline-none focus:ring-2 focus:ring-green-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -118,7 +123,7 @@ export default function LoginPage() {
           Don&apos;t have an account?{" "}
           <button
             className="underline hover:text-green-900"
-            onClick={() => router.push("/signup")}
+            onClick={() => router.push(`/signup?category=${category}`)}
           >
             Sign up
           </button>
