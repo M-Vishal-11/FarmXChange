@@ -8,7 +8,7 @@ export default function AgriOfficerSurvey() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     console.log(Object.fromEntries(formData.entries()));
-    router.replace("/officer");
+    router.replace("/officer/addProduct");
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-100 to-emerald-200 p-4">

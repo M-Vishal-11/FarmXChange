@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation";
 
-export default function Question1() {
+export default function FarmersSurvey() {
   const router = useRouter();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Submitted");
     const formData = new FormData(e.currentTarget);
     console.log(Object.fromEntries(formData.entries()));
-    router.replace("/farmer");
+    router.replace("/farmer/addProduct");
   };
 
   return (
