@@ -24,6 +24,29 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
 
+  useEffect(() => {
+    if (!category) {
+      router.push("/");
+    }
+  }, [category, router]);
+
+  useEffect(() => {
+    if (!error) return;
+
+    switch (error.code) {
+      case "auth/email-already-in-use":
+        toast.error("User already exists");
+        break;
+
+      case "auth/weak-password":
+        toast.error("Password is too weak");
+        break;
+
+      default:
+        toast.error(error.message);
+    }
+  }, [error]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading || user) return;
@@ -49,25 +72,18 @@ export default function SignUpPage() {
 
     console.log(res);
     toast.success("Account created successfully 🎉");
-    router.push("/login"); // login
-  };
 
-  useEffect(() => {
-    if (!error) return;
-
-    switch (error.code) {
-      case "auth/email-already-in-use":
-        toast.error("User already exists");
+    switch (category) {
+      case "farmer":
+        router.push("/questions/farmers"); // questions
         break;
-
-      case "auth/weak-password":
-        toast.error("Password is too weak");
+      case "officer":
+        router.push("/questions/agriofficers"); // questions
         break;
-
       default:
-        toast.error(error.message);
+        router.push("/login"); // login
     }
-  }, [error]);
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-green-700 via-green-600 to-emerald-500 px-4">
