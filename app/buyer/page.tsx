@@ -29,8 +29,8 @@ export default function BuyerHome() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = axios.get("/api/getSellers");
-      const sellers = (await res).data.sellers;
+      const res = await axios.get("/api/getSellers");
+      const sellers = res.data.sellers;
       console.log(sellers);
       setCards(sellers);
     };

@@ -26,10 +26,10 @@ export default function Page() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = axios.post("/api/getProducts", { decodedName });
+      const res = await axios.post("/api/getProducts", { decodedName });
 
-      console.log((await res).data);
-      setProducts((await res).data.productsData);
+      console.log(res.data);
+      setProducts(res.data.productsData);
     };
     getData();
   }, []);

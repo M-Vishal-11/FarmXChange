@@ -6,12 +6,14 @@ type FarmCardProps = {
   name: string;
   description: string;
   quantity: number;
+  price: number;
 };
 
 export default function FarmCard({
   name,
   description,
   quantity,
+  price,
 }: FarmCardProps) {
   const router = useRouter();
 
@@ -28,6 +30,10 @@ export default function FarmCard({
         <p className="text-gray-600 text-sm mt-1 line-clamp-2">{description}</p>
         <p className="text-sm text-green-700 mt-2 font-medium">
           Available: {quantity} Kg
+        </p>
+        <p className="text-lg font-semibold text-gray-800 mt-1">
+          ₹{price}
+          <span className="text-sm text-gray-500"> / kg</span>
         </p>
       </div>
 

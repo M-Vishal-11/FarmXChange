@@ -1,6 +1,38 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 import FarmCard from "./functions/FarmCard";
+import { auth } from "../components/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
+type ProductProps = {
+  productName: string;
+  description: string;
+  availableQuantity: number;
+  price: number;
+  displayName: string; // seller name
+};
 
 export default function FarmerHome() {
+  const [products, setProducts] = useState<ProductProps[]>([]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user?.displayName) return;
+
+      const res = await axios.post("/api/getProducts", {
+        decodedName: user.displayName,
+      });
+
+      // console.log(res.data);
+
+      setProducts(res.data.productsData ?? []);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Search Bar */}
@@ -14,26 +46,15 @@ export default function FarmerHome() {
 
       {/* Cards Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10">
-        <FarmCard
-          name="Tomatoes"
-          description="Pure organic tomatoes with no chemicals"
-          quantity={50}
-        />
-        <FarmCard
-          name="Potatoes"
-          description="Farm fresh potatoes, naturally grown"
-          quantity={80}
-        />
-        <FarmCard
-          name="Potatoes"
-          description="Farm fresh potatoes, naturally grown"
-          quantity={80}
-        />
-        <FarmCard
-          name="Potatoes"
-          description="Farm fresh potatoes, naturally grown"
-          quantity={80}
-        />
+        {products.map((p, i) => (
+          <FarmCard
+            key={i}
+            name={p.productName}
+            description={p.description}
+            quantity={p.availableQuantity}
+            price={p.price}
+          />
+        ))}
       </div>
     </div>
   );

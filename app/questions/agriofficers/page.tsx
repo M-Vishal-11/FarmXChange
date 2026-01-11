@@ -18,14 +18,14 @@ export default function AgriOfficerSurvey() {
       return;
     }
 
-    const res = axios.post("/api/addSeller", {
+    const res = await axios.post("/api/addSeller", {
       displayName: user?.displayName,
       email: user?.email,
       uid: user?.uid,
       description: formData.get("description"),
       phone: formData.get("phone"),
     });
-    console.log((await res)?.data);
+    console.log(res?.data);
 
     router.replace("/officer/addProduct");
   };
