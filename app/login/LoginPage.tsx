@@ -26,6 +26,12 @@ export default function LoginPage() {
     await signInWithEmailAndPassword(email, password);
   };
 
+  useEffect(() => {
+    if (!category) {
+      router.push("/");
+    }
+  }, [category, router]);
+
   //Login Status
   useEffect(() => {
     if (user) {

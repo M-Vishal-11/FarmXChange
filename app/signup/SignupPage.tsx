@@ -81,7 +81,7 @@ export default function SignupPage() {
         router.push("/questions/agriofficers"); // questions
         break;
       default:
-        router.push("/login"); // login
+        router.push("/login?category=buyer"); // login
     }
   };
 

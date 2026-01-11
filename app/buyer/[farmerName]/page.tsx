@@ -2,6 +2,16 @@
 
 import { useParams } from "next/navigation";
 import Product from "@/app/buyer/functions/Product";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+type ProductProps = {
+  productName: string;
+  description: string;
+  availableQuantity: number;
+  price: number;
+  displayName: string; // seller name
+};
 
 export default function Page() {
   const params = useParams<{ farmerName?: string }>();
@@ -12,38 +22,17 @@ export default function Page() {
 
   const decodedName = decodeURIComponent(params.farmerName);
 
-  const products = [
-    {
-      name: "Carrots",
-      description: "Crunchy and sweet farm-grown carrots",
-      quantity: 40,
-      price: 45,
-    },
-    {
-      name: "Cabbage",
-      description: "Fresh green cabbage harvested today",
-      quantity: 25,
-      price: 30,
-    },
-    {
-      name: "Apples",
-      description: "Naturally sweet apples from hill farms",
-      quantity: 60,
-      price: 120,
-    },
-    {
-      name: "Bananas",
-      description: "Fresh yellow bananas, rich in energy",
-      quantity: 100,
-      price: 40,
-    },
-    {
-      name: "Oranges",
-      description: "Juicy oranges with natural sweetness",
-      quantity: 70,
-      price: 80,
-    },
-  ];
+  const [products, setProducts] = useState<ProductProps[]>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = axios.post("/api/getProducts", { decodedName });
+
+      console.log((await res).data);
+      setProducts((await res).data.productsData);
+    };
+    getData();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 p-10">
@@ -68,9 +57,9 @@ export default function Page() {
         {products.map((p, i) => (
           <Product
             key={i}
-            name={p.name}
+            name={p.productName}
             description={p.description}
-            quantity={p.quantity}
+            quantity={p.availableQuantity}
             price={p.price}
             farmerName={decodedName}
           />
