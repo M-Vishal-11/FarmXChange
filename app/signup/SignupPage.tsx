@@ -7,6 +7,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/components/firebase.js";
 import { updateProfile } from "firebase/auth";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -60,6 +61,18 @@ export default function SignupPage() {
       toast.error("Password must be at least 6 characters");
       return;
     }
+
+    if (category != "buyer") {
+      const checkUsername = await axios.post("/api/checkUsernameExist", {
+        userName: name,
+      });
+
+      if (checkUsername?.data.present == false) {
+        toast.error("Pls change the Username");
+        toast.error("Username already exist!");
+      }
+    }
+
     const res = await createUserWithEmailAndPassword(email, password);
 
     if (res?.user) {
@@ -102,7 +115,7 @@ export default function SignupPage() {
           {/* Name */}
           <div>
             <label className="block text-green-800 text-sm mb-1">
-              Full Name
+              Full Name (User Name)
             </label>
             <input
               type="text"
