@@ -3,12 +3,16 @@
 import { useParams } from "next/navigation";
 
 export default function Page() {
-  const params = useParams<{ productName: string }>();
+  const params = useParams<{ productName?: string }>();
+
+  // ✅ Safely decode the URL param
+  const productName = params.productName
+    ? decodeURIComponent(params.productName)
+    : "";
 
   return (
     <div className="bg-linear-to-br from-red-50 via-white to-gray-100 flex justify-center p-6 md:p-12">
       <div className="w-full max-w-xl bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-        {/* Form */}
         <div className="p-8 space-y-6">
           {/* Product Name */}
           <div>
@@ -17,7 +21,7 @@ export default function Page() {
             </label>
             <input
               disabled
-              value={params.productName.replaceAll("-", " ")}
+              value={productName}
               className="w-full px-5 py-3 rounded-xl border bg-gray-100 font-semibold cursor-not-allowed"
             />
           </div>
