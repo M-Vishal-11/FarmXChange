@@ -1,13 +1,32 @@
 "use client";
 
+import { auth } from "@/app/components/firebase";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function AgriOfficerSurvey() {
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = new FormData(e.currentTarget);
-    console.log(Object.fromEntries(formData.entries()));
+
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert("Please login first");
+      return;
+    }
+
+    const res = axios.post("/api/addSeller", {
+      displayName: user?.displayName,
+      email: user?.email,
+      uid: user?.uid,
+      description: formData.get("description"),
+      phone: formData.get("phone"),
+    });
+    console.log((await res)?.data);
+
     router.replace("/officer/addProduct");
   };
   return (
@@ -141,6 +160,34 @@ export default function AgriOfficerSurvey() {
               placeholder="Training, subsidies, awareness programs..."
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
               name="suggestions"
+              required
+            />
+          </div>
+
+          {/* Q8 */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              8. Briefly describe yourself
+            </label>
+            <input
+              type="text"
+              placeholder="Describe yourself"
+              className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+              name="description"
+              required
+            />
+          </div>
+
+          {/* Q9 */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              9. Enter your Phone number
+            </label>
+            <input
+              type="tel"
+              placeholder="+91"
+              className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+              name="phone"
               required
             />
           </div>
