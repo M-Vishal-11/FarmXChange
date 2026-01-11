@@ -3,10 +3,12 @@
 import { auth } from "@/app/components/firebase";
 import axios from "axios";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Page() {
+  const router = useRouter();
   const params = useParams<{ productName?: string }>();
   const productName = params.productName
     ? decodeURIComponent(params.productName)
@@ -35,6 +37,10 @@ export default function Page() {
         });
         const data = res.data.productData[0];
         console.log(data);
+        if (!data) {
+          toast.error("something went wrong");
+          router.replace("/farmer");
+        }
 
         setDescription(data.description);
         setAvailableQuantity(data.availableQuantity);
@@ -75,6 +81,7 @@ export default function Page() {
     });
 
     toast.success("Product deleted");
+    router.replace("/farmer");
   };
 
   return (
