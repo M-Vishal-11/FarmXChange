@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Page() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function Page() {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
+  const [description, setDescription] = useState("");
 
   // 🔄 Load existing user data
   useEffect(() => {
@@ -38,6 +40,15 @@ export default function Page() {
       router.push("/login?category=farmer");
     }
   }, [user, loading, router]);
+
+  //Description
+  useEffect(() => {
+    const getDescription = async () => {
+      const res = await axios.post("/api/getDescriptionSeller", { userName });
+      setDescription(res?.data.description);
+    };
+    getDescription();
+  }, [userName]);
 
   // 🔐 Re-authentication (required for sensitive actions)
   const reAuthenticate = async () => {
@@ -153,6 +164,11 @@ export default function Page() {
     );
   };
 
+  //Update description
+  const handleDescription = async () => {
+    console.log("hello");
+  };
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -180,6 +196,31 @@ export default function Page() {
                    transition"
           >
             Update Username
+          </button>
+        </section>
+
+        {/* Description */}
+        <section className="space-y-3">
+          <label className="text-sm font-medium text-gray-600">
+            description
+          </label>
+          <textarea
+            className="w-full rounded-xl border border-gray-300 px-4 py-3
+             outline-none focus:ring-2 focus:ring-green-500
+             transition resize-none"
+            rows={2}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+
+          <button
+            onClick={handleDescription}
+            className="w-full py-3 rounded-xl
+                   bg-lime-600 text-white font-semibold
+                   hover:bg-lime-700 active:scale-95
+                   transition"
+          >
+            Update Description
           </button>
         </section>
 
