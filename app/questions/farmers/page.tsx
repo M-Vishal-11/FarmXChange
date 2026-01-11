@@ -49,7 +49,6 @@ export default function FarmersSurvey() {
               rows={3}
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none resize-none"
               name="pesticides"
-              required
             />
           </div>
 
@@ -61,7 +60,6 @@ export default function FarmersSurvey() {
             <select
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               name="cleanliness"
-              required
             >
               <option value="">Select an option</option>
               <option>Yes</option>
@@ -80,7 +78,6 @@ export default function FarmersSurvey() {
               placeholder="In acres"
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               name="area"
-              required
             />
           </div>
 
@@ -94,7 +91,6 @@ export default function FarmersSurvey() {
               placeholder="Eg: Rice, Wheat, Vegetables"
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               name="type"
-              required
             />
           </div>
 
@@ -106,7 +102,6 @@ export default function FarmersSurvey() {
             <select
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               name="irrigationMethod"
-              required
             >
               <option value="">Select method</option>
               <option>Drip Irrigation</option>
@@ -124,7 +119,6 @@ export default function FarmersSurvey() {
             <select
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
               name="repetition"
-              required
             >
               <option value="">Select frequency</option>
               <option>Weekly</option>
@@ -141,11 +135,11 @@ export default function FarmersSurvey() {
             </label>
             <div className="flex gap-6">
               <label className="flex items-center gap-2">
-                <input type="radio" name="organic" value="Yes" required />
+                <input type="radio" name="organic" value="Yes" />
                 Yes
               </label>
               <label className="flex items-center gap-2">
-                <input type="radio" name="organic" value="No" required />
+                <input type="radio" name="organic" value="No" />
                 No
               </label>
             </div>

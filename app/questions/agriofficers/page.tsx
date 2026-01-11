@@ -47,7 +47,6 @@ export default function AgriOfficerSurvey() {
               placeholder="Eg: Assistant Agricultural Officer"
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               name="designation"
-              required
             />
           </div>
 
@@ -61,7 +60,6 @@ export default function AgriOfficerSurvey() {
               placeholder="In villages / acres"
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               name="area"
-              required
             />
           </div>
 
@@ -73,7 +71,6 @@ export default function AgriOfficerSurvey() {
             <select
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               name="repetition"
-              required
             >
               <option>Select frequency</option>
               <option>Weekly</option>
@@ -93,7 +90,6 @@ export default function AgriOfficerSurvey() {
               placeholder="Pest attack, water shortage, soil issues..."
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
               name="issues"
-              required
             />
           </div>
 
@@ -105,7 +101,6 @@ export default function AgriOfficerSurvey() {
             <select
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               name="followingRules"
-              required
             >
               <option>Select an option</option>
               <option>Yes</option>
@@ -121,30 +116,15 @@ export default function AgriOfficerSurvey() {
             </label>
             <div className="flex gap-4">
               <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="organicAwareness"
-                  value="Yes"
-                  required
-                />
+                <input type="radio" name="organicAwareness" value="Yes" />
                 Yes
               </label>
               <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="organicAwareness"
-                  value="No"
-                  required
-                />
+                <input type="radio" name="organicAwareness" value="No" />
                 No
               </label>
               <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="organicAwareness"
-                  value="somewhat"
-                  required
-                />
+                <input type="radio" name="organicAwareness" value="somewhat" />
                 Somewhat
               </label>
             </div>
@@ -160,7 +140,6 @@ export default function AgriOfficerSurvey() {
               placeholder="Training, subsidies, awareness programs..."
               className="w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none resize-none"
               name="suggestions"
-              required
             />
           </div>
 
