@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Home, ShoppingCart, Leaf, Settings } from "lucide-react";
+import { Home, ShoppingCart, Leaf, Settings, Package } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function layoutPage({
@@ -38,6 +38,15 @@ export default function layoutPage({
             <ShoppingCart className="w-5 h-5" />
             Cart
           </button>
+
+          <button
+            onClick={() => router.push("/buyer/viewOrders")}
+            className="flex items-center gap-2 hover:text-red-500 transition"
+          >
+            <Package className="w-5 h-5" />
+            View Orders
+          </button>
+
           <button
             onClick={() => router.push("/buyer/settings")}
             className="flex items-center gap-2 hover:text-red-500 transition"
