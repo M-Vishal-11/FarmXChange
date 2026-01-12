@@ -68,8 +68,15 @@ export default function Page() {
 
     await updateProfile(user, { displayName: userName });
     await user.reload();
-
-    toast.success("Username updated ✅");
+    const res = await axios.post("/api/checkAndUpdateUsername", {
+      userName,
+      sellerId: user.uid,
+    });
+    if (res.data.success) {
+      toast.success("Username updated ✅");
+    } else {
+      toast.error("Username Exist ❌");
+    }
   };
 
   // ✉️ Update email
@@ -166,7 +173,11 @@ export default function Page() {
 
   //Update description
   const handleDescription = async () => {
-    console.log("hello");
+    const res = await axios.post("/api/updateDescriptionSeller", {
+      userName: user?.displayName,
+      description,
+    });
+    console.log(res.data);
   };
 
   if (loading) return <p>Loading...</p>;
