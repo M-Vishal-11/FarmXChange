@@ -6,7 +6,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { auth } from "@/app/components/firebase";
-import { useFarmers } from "../functions/cartStore";
+import { useClearCart, useFarmers } from "../functions/cartStore";
 
 export default function BuyerInfo() {
   const router = useRouter();
@@ -17,6 +17,7 @@ export default function BuyerInfo() {
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
   const cartData = Object.entries(useFarmers());
+  const clearCart = useClearCart();
 
   /* =========================
      AUTH + AUTO FILL
@@ -104,6 +105,7 @@ export default function BuyerInfo() {
       });
 
       toast.success("Order placed successfully 🎉");
+      clearCart();
       router.replace("/buyer/orderPlaced");
     } catch (error) {
       console.error(error);

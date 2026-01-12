@@ -17,6 +17,7 @@ type cartProps = {
     ) => void;
     removeItem: (farmerName: string, productName: string) => void;
     updateQnty: (farmerName: string, productName: string, qnty: number) => void;
+    clearCart: () => void;
   };
 };
 
@@ -89,6 +90,12 @@ export const useCart = create<cartProps>((set) => ({
           },
         };
       }),
+
+    //Clear CartData
+    clearCart: () =>
+      set(() => ({
+        farmers: {},
+      })),
   },
 }));
 
@@ -96,3 +103,4 @@ export const useCart = create<cartProps>((set) => ({
 export const useFarmers = () => useCart((state) => state.farmers);
 export const useUpdateQnty = () => useCart((state) => state.actions.updateQnty);
 export const useRemoveItem = () => useCart((state) => state.actions.removeItem);
+export const useClearCart = () => useCart((state) => state.actions.clearCart);

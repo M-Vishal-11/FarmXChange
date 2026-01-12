@@ -26,7 +26,7 @@ export default function OrderPlacedPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-slate-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-emerald-50 to-slate-100 px-4">
       <div className="bg-white rounded-3xl shadow-2xl p-10 text-center w-full max-w-md animate-fade-in">
         {/* ✅ Tick Animation */}
         <div className="mx-auto mb-6 w-24 h-24 rounded-full bg-emerald-100 flex items-center justify-center animate-pop">
@@ -55,10 +55,10 @@ export default function OrderPlacedPage() {
         </p>
 
         <button
-          onClick={() => router.replace("/buyer")}
+          onClick={() => router.replace("/buyer/viewOrders")}
           className="w-full py-3 rounded-xl bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition"
         >
-          Go to Home
+          View Order
         </button>
       </div>
 
