@@ -1,41 +1,44 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "./functions/Card";
 import axios from "axios";
+import { Card } from "./functions/Card";
 
 type CardProps = {
+  id: string;
   displayName: string;
   description: string;
 };
 
 export default function BuyerHome() {
-  // const cards: CardProps[] = [
-  //   {
-  //     farmerName: "Farmer 1",
-  //     description: "Fresh organic vegetables directly from the farm.",
-  //   },
-  //   {
-  //     farmerName: "Farmer 2",
-  //     description: "Naturally grown fruits with zero chemicals.",
-  //   },
-  //   {
-  //     farmerName: "Farmer 3",
-  //     description: "Naturally grown fruits with zero chemicals.",
-  //   },
-  // ];
-
   const [cards, setCards] = useState<CardProps[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("/api/getSellers");
-      const sellers = res.data.sellers;
-      console.log(sellers);
-      setCards(sellers);
+      try {
+        const res = await axios.get("/api/getSellers");
+        console.log(res.data);
+        setCards(res.data.sellers ?? []);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to load sellers");
+      } finally {
+        setLoading(false);
+      }
     };
+
     getData();
   }, []);
+
+  if (loading) {
+    return <p className="text-center mt-20">Loading sellers...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-20 text-red-500">{error}</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -50,11 +53,11 @@ export default function BuyerHome() {
 
       {/* Cards Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
-        {cards.map((item, index) => (
+        {cards.map((item) => (
           <Card
+            key={item.id}
             farmerName={item.displayName}
             description={item.description}
-            key={index}
           />
         ))}
       </div>
