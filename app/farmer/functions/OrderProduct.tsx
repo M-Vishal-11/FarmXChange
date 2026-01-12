@@ -8,7 +8,7 @@ export function OrdersProduct({ productName, qnty, price }: productProps) {
         <div className="text-sm text-gray-600">Quantity: {qnty} Kg</div>
       </div>
 
-      <div className="font-semibold text-red-600">₹{price}</div>
+      <div className="font-semibold text-red-600">₹{price * qnty}</div>
     </div>
   );
 }
