@@ -1,5 +1,6 @@
 import { OrdersProduct } from "@/app/farmer/functions/OrderProduct";
 import { farmerProps } from "../viewOrders/page";
+import { useMemo } from "react";
 
 export function ViewOrderCard({
   farmerName,
@@ -7,7 +8,10 @@ export function ViewOrderCard({
   phone,
   email,
 }: farmerProps) {
-  const total = products.reduce((sum, item) => sum + item.price * item.qnty, 0);
+  const total = useMemo(
+    () => products.reduce((sum, item) => sum + item.price * item.qnty, 0),
+    [products]
+  );
 
   return (
     <article className="bg-white rounded-2xl shadow-md p-6">

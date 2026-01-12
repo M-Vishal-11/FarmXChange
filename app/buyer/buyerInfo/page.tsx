@@ -13,6 +13,7 @@ export default function BuyerInfo() {
 
   const [user, setUser] = useState<User | null>(null);
   const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,9 @@ export default function BuyerInfo() {
 
       if (user.displayName) {
         setFullName(user.displayName);
+      }
+      if (user.email) {
+        setEmail(user.email);
       }
       const getData = async () => {
         const res = await axios.post("/api/getBuyer", { userId: user.uid });
@@ -99,6 +103,7 @@ export default function BuyerInfo() {
       await axios.post("/api/placeOrder", {
         userId: user.uid,
         fullName,
+        email,
         phone,
         address,
         cartData,
@@ -137,6 +142,21 @@ export default function BuyerInfo() {
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Enter your full name"
+              className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email <span className="text-emerald-500">*</span>
+            </label>
+            <input
+              type="text"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email id"
               className="w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             />
           </div>

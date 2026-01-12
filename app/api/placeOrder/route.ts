@@ -34,10 +34,7 @@ export async function POST(req: Request) {
           fullName: body.fullName,
           phone: body.phone,
           address: body.address,
-          updatedAt: new Date(),
-        },
-        $setOnInsert: {
-          createdAt: new Date(),
+          email: body.email,
         },
       },
       { upsert: true }
