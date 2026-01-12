@@ -83,7 +83,6 @@ export default function SignupPage() {
 
     await res?.user.reload();
 
-    console.log(res);
     toast.success("Account created successfully 🎉");
 
     switch (category) {

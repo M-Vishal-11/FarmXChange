@@ -11,7 +11,6 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  console.log(category);
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
@@ -36,7 +35,6 @@ export default function LoginPage() {
   useEffect(() => {
     if (user) {
       toast.success("Login successful 🎉");
-      console.log(user);
       router.push(`/${category}`);
     }
   }, [user, router]);
