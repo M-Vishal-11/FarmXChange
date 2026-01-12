@@ -33,6 +33,8 @@ export default function BuyerHome() {
   }, []);
 
   const filteredCards = useMemo(() => {
+    if (!searchVal.trim()) return cards;
+
     return cards.filter((card) =>
       card.displayName.toLowerCase().includes(searchVal.toLowerCase())
     );
