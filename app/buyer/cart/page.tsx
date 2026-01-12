@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCart } from "../functions/cartStore";
+import {
+  useFarmers,
+  useRemoveItem,
+  useUpdateQnty,
+} from "../functions/cartStore";
 
 type CartItemType = {
   name: string;
@@ -14,45 +17,36 @@ type CartItemType = {
 export default function Cart() {
   const router = useRouter();
 
-  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  // ✅ Zustand state (single source of truth)
+  const farmers = useFarmers();
+  const updateQnty = useUpdateQnty();
+  const removeItem = useRemoveItem();
 
-  const farmers = useCart((state) => state.farmers);
+  // ✅ Derived cart items (NO useState, NO useEffect)
+  const cartItems: CartItemType[] = Object.entries(farmers).flatMap(
+    ([farmerName, products]) =>
+      products.map((product) => ({
+        name: product.productName,
+        price: product.price,
+        quantity: product.qnty,
+        farmerName,
+      }))
+  );
 
-  useEffect(() => {
-    const items: CartItemType[] = [];
+  // ✅ Handlers (pure, predictable)
+  const increaseQty = (item: CartItemType) => {
+    updateQnty(item.farmerName, item.name, item.quantity + 1);
+  };
 
-    for (const farmerName in farmers) {
-      farmers[farmerName].forEach((product) => {
-        items.push({
-          name: product.productName,
-          price: product.price,
-          quantity: product.qnty,
-          farmerName,
-        });
-      });
+  const decreaseQty = (item: CartItemType) => {
+    if (item.quantity <= 1) {
+      removeItem(item.farmerName, item.name);
+    } else {
+      updateQnty(item.farmerName, item.name, item.quantity - 1);
     }
-
-    setCartItems(items);
-  }, [farmers]);
-
-  const increaseQty = (index: number) => {
-    setCartItems((prev) =>
-      prev.map((item, i) =>
-        i === index ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
   };
 
-  const decreaseQty = (index: number) => {
-    setCartItems((prev) =>
-      prev
-        .map((item, i) =>
-          i === index ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  };
-
+  // ✅ Totals
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -71,15 +65,12 @@ export default function Cart() {
           {cartItems.length === 0 ? (
             <div className="text-gray-500 text-lg">Your cart is empty 🛒</div>
           ) : (
-            cartItems.map((item, index) => (
+            cartItems.map((item) => (
               <CartItem
                 key={`${item.farmerName}-${item.name}`}
-                name={item.name}
-                price={item.price}
-                quantity={item.quantity}
-                onIncrease={() => increaseQty(index)}
-                onDecrease={() => decreaseQty(index)}
-                farmerName={item.farmerName}
+                {...item}
+                onIncrease={() => increaseQty(item)}
+                onDecrease={() => decreaseQty(item)}
               />
             ))
           )}
@@ -109,7 +100,7 @@ export default function Cart() {
           <button
             disabled={cartItems.length === 0}
             className="mt-6 w-full py-3 rounded-xl bg-red-500 text-white font-semibold hover:bg-red-600 transition disabled:opacity-50"
-            onClick={() => router.push("/buyer/payment")}
+            onClick={() => router.push("/buyer/buyerInfo")}
           >
             Proceed to Checkout
           </button>
@@ -119,25 +110,29 @@ export default function Cart() {
   );
 }
 
+/* ============================= */
+/* Cart Item Component           */
+/* ============================= */
+
 function CartItem({
   name,
   price,
   quantity,
+  farmerName,
   onIncrease,
   onDecrease,
-  farmerName,
 }: {
   name: string;
   price: number;
   quantity: number;
+  farmerName: string;
   onIncrease: () => void;
   onDecrease: () => void;
-  farmerName: string;
 }) {
   return (
     <div className="flex items-center gap-6 bg-white rounded-2xl shadow-md p-5">
       {/* Image */}
-      <div className="h-20 w-20 bg-stone-300 rounded-xl"></div>
+      <div className="h-20 w-20 bg-stone-300 rounded-xl" />
 
       {/* Details */}
       <div className="flex-1">

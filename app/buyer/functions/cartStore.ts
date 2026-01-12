@@ -16,14 +16,15 @@ type cartProps = {
       qnty: number
     ) => void;
     removeItem: (farmerName: string, productName: string) => void;
-
     updateQnty: (farmerName: string, productName: string, qnty: number) => void;
   };
 };
 
 export const useCart = create<cartProps>((set) => ({
   farmers: {},
+
   actions: {
+    // ✅ ADD ITEM
     addItem: (farmerName, productName, price, qnty) =>
       set((state) => {
         const farmerProducts = state.farmers[farmerName] ?? [];
@@ -32,16 +33,37 @@ export const useCart = create<cartProps>((set) => ({
           (p) => p.productName === productName
         );
 
-        let updatedProducts;
+        const updatedProducts =
+          existingIndex !== -1
+            ? farmerProducts.map((p, index) =>
+                index === existingIndex ? { ...p, qnty: p.qnty + qnty } : p
+              )
+            : [...farmerProducts, { productName, price, qnty }];
 
-        if (existingIndex !== -1) {
-          // ✅ Product exists → update quantity
-          updatedProducts = farmerProducts.map((p, index) =>
-            index === existingIndex ? { ...p, qnty: p.qnty + qnty } : p
-          );
-        } else {
-          // ✅ Product does not exist → add new
-          updatedProducts = [...farmerProducts, { productName, price, qnty }];
+        return {
+          farmers: {
+            ...state.farmers,
+            [farmerName]: updatedProducts,
+          },
+        };
+      }),
+
+    // ✅ REMOVE ITEM (FIXED)
+    removeItem: (farmerName, productName) =>
+      set((state) => {
+        const farmerProducts = state.farmers[farmerName];
+        if (!farmerProducts) return state;
+
+        const updatedProducts = farmerProducts.filter(
+          (p) => p.productName !== productName
+        );
+
+        // remove farmer if empty
+        if (updatedProducts.length === 0) {
+          const { [farmerName]: _, ...remainingFarmers } = state.farmers;
+          return {
+            farmers: remainingFarmers,
+          };
         }
 
         return {
@@ -52,49 +74,25 @@ export const useCart = create<cartProps>((set) => ({
         };
       }),
 
-    removeItem: (farmerName, productName) => {
+    // ✅ UPDATE QUANTITY (FIXED)
+    updateQnty: (farmerName, productName, qnty) =>
       set((state) => {
         const farmerProducts = state.farmers[farmerName];
-        if (!farmerProducts) {
-          return state;
-        }
-
-        const updatedProducts = farmerProducts.filter(
-          (p) => p.productName != productName
-        );
-
-        if (updatedProducts.length === 0) {
-          const { [farmerName]: _, ...remainingFarmers } = state.farmers;
-
-          return {
-            farmers: remainingFarmers,
-          };
-        }
+        if (!farmerProducts) return state;
 
         return {
-          ...state.farmers,
-          [farmerName]: updatedProducts,
+          farmers: {
+            ...state.farmers,
+            [farmerName]: farmerProducts.map((p) =>
+              p.productName === productName ? { ...p, qnty } : p
+            ),
+          },
         };
-      });
-    },
-
-    updateQnty: (farmerName, productName, qnty) => {
-      set((state) => {
-        const farmerProducts = state.farmers[farmerName];
-
-        if (!farmerProducts) {
-          return state;
-        }
-
-        const updatedProducts = farmerProducts.map((p) =>
-          p.productName == productName ? { ...p, qnty } : p
-        );
-
-        return {
-          ...state.farmers,
-          [farmerName]: updatedProducts,
-        };
-      });
-    },
+      }),
   },
 }));
+
+// ✅ Selectors (good 👍)
+export const useFarmers = () => useCart((state) => state.farmers);
+export const useUpdateQnty = () => useCart((state) => state.actions.updateQnty);
+export const useRemoveItem = () => useCart((state) => state.actions.removeItem);
