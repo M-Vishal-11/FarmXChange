@@ -5,6 +5,7 @@ import axios from "axios";
 import FarmCard from "./functions/FarmCard";
 import { auth } from "../components/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import toast from "react-hot-toast";
 
 type ProductProps = {
   productName: string;
@@ -25,7 +26,10 @@ export default function FarmerHome() {
         decodedName: user.displayName,
       });
 
-      // console.log(res.data);
+      console.log(res.data);
+      if (res.data.productsData.length == 0) {
+        toast.error("No products found!");
+      }
 
       setProducts(res.data.productsData ?? []);
     });

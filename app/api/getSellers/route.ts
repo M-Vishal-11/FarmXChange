@@ -10,8 +10,6 @@ export async function GET() {
       .find({}, { projection: { _id: 0, displayName: 1, description: 1 } })
       .toArray();
 
-    console.log(data);
-
     return NextResponse.json({
       message: "Received",
       sellers: data,

@@ -32,19 +32,19 @@ export default function layoutPage({
           </button>
 
           <button
-            onClick={() => router.push("/buyer/cart")}
-            className="flex items-center gap-2 hover:text-red-500 transition"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            Cart
-          </button>
-
-          <button
             onClick={() => router.push("/buyer/viewOrders")}
             className="flex items-center gap-2 hover:text-red-500 transition"
           >
             <Package className="w-5 h-5" />
             View Orders
+          </button>
+
+          <button
+            onClick={() => router.push("/buyer/cart")}
+            className="flex items-center gap-2 hover:text-red-500 transition"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            Cart
           </button>
 
           <button

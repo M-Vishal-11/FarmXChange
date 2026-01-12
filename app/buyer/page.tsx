@@ -53,9 +53,9 @@ export default function BuyerHome() {
 
       {/* Cards Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
-        {cards.map((item) => (
+        {cards.map((item, i) => (
           <Card
-            key={item.id}
+            key={i}
             farmerName={item.displayName}
             description={item.description}
           />
