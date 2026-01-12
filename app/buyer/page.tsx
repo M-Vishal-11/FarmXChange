@@ -5,7 +5,6 @@ import axios from "axios";
 import { Card } from "./functions/Card";
 
 type CardProps = {
-  id: string;
   displayName: string;
   description: string;
 };
@@ -60,7 +59,7 @@ export default function BuyerHome() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
         {filteredCards.map((item) => (
           <Card
-            key={item.id}
+            key={item.displayName}
             farmerName={item.displayName}
             description={item.description}
           />
