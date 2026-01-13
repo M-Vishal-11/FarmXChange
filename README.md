@@ -1,5 +1,6 @@
 # FarmXchange 🌾🚀
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-black)](https://farm-x-change-sigma.vercel.app)
 ![Next.js](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
