@@ -1,5 +1,11 @@
 # FarmXchange 🌾🚀
 
+![Next.js](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=000)
+![Vercel](https://img.shields.io/badge/Vercel-000?logo=vercel&logoColor=white)
+
 FarmXchange is a full-stack marketplace web app that connects **Farmers (Sellers)** and **Buyers** to buy and sell farm products.  
 Built with **Next.js (App Router)**, **Firebase Auth**, and **MongoDB Atlas**, with modern UI, smooth state management, and production deployment on **Vercel**.
 
@@ -63,21 +69,30 @@ eslint.config.mjs
 
 ---
 
+## 📂 Folder Explanation
+- **app/** — pages, layouts, routes (Next.js App Router)
+- **lib/** — helpers (db connection, utils, auth helpers)
+- **public/** — static assets (images, icons)
+- **types/** — TypeScript types/interfaces
+
+
+---
+
 ## ⚙️ Local Setup
 Run these commands in your terminal (project root).
 
 ### 1) Clone the repo
 
-````
+```
 git clone "https://github.com/M-Vishal-11/FarmXChange.git"
-cd <farmxchange> 
-````
+cd farmxchange
+```
 
 ### 2) Install dependencies
 
-````
+```
 npm install
-````
+```
 
 ### 3) Create `.env.local`
 Create a file named **.env.local** in the project root.
@@ -87,18 +102,26 @@ Notes:
 - Restart the dev server after changing env variables
 
 ##### Template:
-````
+```
 # MongoDB Atlas
 MONGODB_URI="mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority"
-````
+
+# Firebase
+NEXT_PUBLIC_FIREBASE_API_KEY=""
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=""
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=""
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=""
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
+NEXT_PUBLIC_FIREBASE_APP_ID=""
+```
 
 **Security note:** never expose real passwords in README. Keep credentials only in .env.local / Vercel env settings.
 
 ### 4) Run the development server
 
-````
+```
 npm run dev
-````
+```
 
 Open:
 <http://localhost:3000>
@@ -121,6 +144,16 @@ Open:
 ### ✅ IP Whitelist (Important)
 - Add your current IP: ```xxx.xxx.xxx.xxx/32```
 - Avoid ```0.0.0.0/0``` (public access) unless temporary testing
+
+---
+
+## 🧯 Troubleshooting
+- **MongoDB connection fails:** Add your IP in Atlas → Network Access, and confirm `MONGODB_URI` is correct.
+- **Env changes not working:** Restart the dev server after editing `.env.local`.
+- **Firebase login not working:** Verify `NEXT_PUBLIC_...` keys match Firebase Web App config.
+- **404 on API route:** Ensure the route exists under `app/api/.../route.ts` and method matches (GET/POST).
+- **SSL / TLS error with MongoDB Atlas:** Ensure Atlas Network Access allows your IP and your connection string has `retryWrites=true&w=majority`. Try updating Node.js to LTS and reinstall deps.
+- **Vercel build fails:** Ensure all env vars exist in Vercel → Settings → Environment Variables, then redeploy.
 
 ---
 
@@ -148,6 +181,19 @@ npm run lint     # lint project
 
 ---
 
+## 🛣️ Roadmap
+- [ ] Image upload for products (Firebase Storage)
+- [ ] Order status tracking (Placed → Accepted → Shipped → Delivered)
+- [ ] Ratings & reviews for products/farmers
+- [ ] Payment integration (Razorpay/Stripe)
+- [ ] Order cancellation + refund flow
+- [ ] Role-based access control (Buyer/Farmer/Officer/Admin)
+- [ ] Pagination + infinite scroll for products
+- [ ] Save favorites (farmers/products wishlist)
+- [ ] Multi-language support (Tamil/English)
+
+---
+
 ## 🧩 Libraries Used
 - **zustand** — state management
 - **axios** — API requests
@@ -164,3 +210,9 @@ npm run lint     # lint project
 - Keep credentials in:
   - ```.env.local``` (local)
   - Vercel Environment Variables (production)
+
+---
+
+## 👥 Contributors
+- Vishal M — Full Stack Developer
+- Varun Velsami — Idea & Feedback
