@@ -181,19 +181,6 @@ npm run lint     # lint project
 
 ---
 
-## 🛣️ Roadmap
-- [ ] Image upload for products (Firebase Storage)
-- [ ] Order status tracking (Placed → Accepted → Shipped → Delivered)
-- [ ] Ratings & reviews for products/farmers
-- [ ] Payment integration (Razorpay/Stripe)
-- [ ] Order cancellation + refund flow
-- [ ] Role-based access control (Buyer/Farmer/Officer/Admin)
-- [ ] Pagination + infinite scroll for products
-- [ ] Save favorites (farmers/products wishlist)
-- [ ] Multi-language support (Tamil/English)
-
----
-
 ## 🧩 Libraries Used
 - **zustand** — state management
 - **axios** — API requests
