@@ -12,7 +12,13 @@ type ProductProps = {
   description: string;
   availableQuantity: number;
   price: number;
-  displayName: string; // seller name
+  displayName: string;
+};
+
+type WeatherProps = {
+  temp: number;
+  humidity: number;
+  condition: string;
 };
 
 export default function FarmerHome() {
@@ -20,6 +26,11 @@ export default function FarmerHome() {
   const [searchVal, setSearchVal] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // 🌤 Weather state
+  const [weather, setWeather] = useState<WeatherProps | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState(true);
+
+  // 🔐 Auth + products
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user?.displayName) {
@@ -49,27 +60,95 @@ export default function FarmerHome() {
     return () => unsubscribe();
   }, []);
 
+  // 🌤 Weather fetch (Chennai)
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+        if (!apiKey) return;
+
+        const res = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=Chennai&units=metric&appid=${apiKey}`,
+        );
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        setWeather({
+          temp: data.main.temp,
+          humidity: data.main.humidity,
+          condition: data.weather[0].description,
+        });
+      } catch {
+        // silent fail – weather is secondary
+      } finally {
+        setWeatherLoading(false);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
+  // 🔍 Search filter
   const filteredProducts = useMemo(() => {
     const value = searchVal.trim().toLowerCase();
-
     if (!value) return products;
 
     return products.filter((product) =>
-      product.productName.toLowerCase().includes(value)
+      product.productName.toLowerCase().includes(value),
     );
   }, [searchVal, products]);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Search Bar */}
+      {/* Search + Weather */}
       <div className="flex justify-center mt-10 px-4">
-        <input
-          type="text"
-          placeholder="Search products..."
-          className="w-full max-w-xl px-5 py-3 rounded-full border shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400"
-          value={searchVal}
-          onChange={(e) => setSearchVal(e.target.value)}
-        />
+        <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Search */}
+          <div className="md:col-span-2">
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full px-5 py-3 rounded-full border shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+            />
+          </div>
+
+          {/* Weather */}
+          <div className="bg-white border rounded-xl shadow-sm p-4 flex flex-col justify-center">
+            {weatherLoading ? (
+              <p className="text-center text-sm text-gray-500">
+                Loading climate...
+              </p>
+            ) : weather ? (
+              <>
+                <p className="text-sm font-semibold text-gray-800 mb-2">
+                  🌤️ Chennai
+                </p>
+
+                <div className="text-xs text-gray-700 space-y-1">
+                  <p>
+                    <span className="font-medium">Temp:</span> {weather.temp}°C
+                  </p>
+                  <p className="capitalize">
+                    <span className="font-medium">Condition:</span>{" "}
+                    {weather.condition}
+                  </p>
+                  <p>
+                    <span className="font-medium">Humidity:</span>{" "}
+                    {weather.humidity}%
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p className="text-center text-sm text-gray-500">
+                Weather unavailable
+              </p>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Loading */}
@@ -84,7 +163,7 @@ export default function FarmerHome() {
         </p>
       )}
 
-      {/* Cards Section */}
+      {/* Products */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-10">
         {filteredProducts.map((p) => (
           <FarmCard
