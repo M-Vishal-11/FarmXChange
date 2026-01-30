@@ -1,7 +1,14 @@
 "use client";
 
 import { onAuthStateChanged } from "firebase/auth";
-import { Home, Leaf, Settings, PlusCircle, Package } from "lucide-react";
+import {
+  Home,
+  Leaf,
+  Settings,
+  PlusCircle,
+  Package,
+  MessageCircle,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -65,6 +72,15 @@ export default function LayoutPage({
           >
             <Package className="w-5 h-5" />
             View Orders {len !== 0 && <strong>({len})</strong>}
+          </button>
+
+          {/* ✅ Ask Officer */}
+          <button
+            onClick={() => router.push("/farmer/askOfficer")}
+            className={navBtn}
+          >
+            <MessageCircle className="w-5 h-5" />
+            Ask Officer
           </button>
 
           <button
