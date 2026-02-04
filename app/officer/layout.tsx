@@ -23,8 +23,8 @@ export default function OfficerLayout({
   const router = useRouter();
   const pathname = usePathname();
 
-  const [orderLen, setOrderLen] = useState(0);
-  const [chatLen, setChatLen] = useState(0);
+  // const [orderLen, setOrderLen] = useState(0);
+  // const [chatLen, setChatLen] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -35,17 +35,17 @@ export default function OfficerLayout({
 
       const officerName = user.displayName || "Officer";
 
-      try {
-        // ✅ you can create these APIs later. For now keep one.
-        const res = await axios.post("/api/getOrderLength", { officerName });
-        setOrderLen(res.data.dataLength || 0);
+      // try {
+      //   // ✅ you can create these APIs later. For now keep one.
+      //   const res = await axios.post("/api/getOrderLength", { officerName });
+      //   setOrderLen(res.data.dataLength || 0);
 
-        // Optional unread chats length (create this API later)
-        // const chatRes = await axios.post("/api/getOfficerUnreadChats", { officerName });
-        // setChatLen(chatRes.data.count || 0);
-      } catch (e) {
-        console.log(e);
-      }
+      //   // Optional unread chats length (create this API later)
+      //   // const chatRes = await axios.post("/api/getOfficerUnreadChats", { officerName });
+      //   // setChatLen(chatRes.data.count || 0);
+      // } catch (e) {
+      //   console.log(e);
+      // }
     });
 
     return () => unsubscribe();
@@ -59,13 +59,6 @@ export default function OfficerLayout({
     },
     [pathname],
   );
-
-  const Badge = ({ n }: { n: number }) =>
-    n > 0 ? (
-      <span className="ml-2 inline-flex min-w-[22px] items-center justify-center rounded-full bg-green-600 px-2 py-0.5 text-xs font-bold text-white">
-        {n}
-      </span>
-    ) : null;
 
   return (
     <div className="min-h-screen bg-linear-to-b from-green-50 to-white">

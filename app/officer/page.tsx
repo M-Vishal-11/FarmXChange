@@ -222,7 +222,7 @@ export default function OfficerDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white px-4 py-8">
+    <div className="min-h-screen bg-linear-to-b from-green-50 to-white px-4 py-8">
       <div className="mx-auto max-w-6xl">
         {/* Top bar */}
         <div className="mb-5 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200">
@@ -262,6 +262,13 @@ export default function OfficerDashboard() {
                 </div>
               </div>
             </div>
+
+            <button
+              onClick={() => alert("Logout later")}
+              className="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700"
+            >
+              Toggle online
+            </button>
 
             <button
               onClick={() => alert("Logout later")}
