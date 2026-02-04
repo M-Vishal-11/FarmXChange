@@ -68,7 +68,7 @@ export default function LayoutPage({
           </button>
 
           <button
-            onClick={() => router.push("/farmer/settings")}
+            onClick={() => router.push("/seedSeller/settings")}
             className={navBtn}
           >
             <Settings className="w-5 h-5" />
