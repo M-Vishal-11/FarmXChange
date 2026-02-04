@@ -8,7 +8,7 @@ import {
   PlusCircle,
   Package,
   MessageCircle,
-  ShoppingCart,
+  Sprout,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -89,7 +89,7 @@ export default function LayoutPage({
             onClick={() => router.push("/farmer/buySeeds")}
             className={navBtn}
           >
-            <ShoppingCart className="w-5 h-5" />
+            <Sprout className="w-5 h-5" />
             Buy Seeds
           </button>
 
