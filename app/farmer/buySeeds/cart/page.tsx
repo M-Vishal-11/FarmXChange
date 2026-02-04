@@ -118,7 +118,7 @@ export default function SeedCart() {
 
           <button
             disabled={cartItems.length === 0}
-            onClick={() => router.push("/buyer/seedCheckout")}
+            onClick={() => router.push("/farmer/buySeeds/farmerInfo")}
             className="mt-6 w-full py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition disabled:opacity-50"
           >
             Proceed to Seed Checkout

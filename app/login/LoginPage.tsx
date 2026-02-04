@@ -35,6 +35,10 @@ export default function LoginPage() {
   useEffect(() => {
     if (user) {
       toast.success("Login successful 🎉");
+      if (category == "seedseller") {
+        router.push("/seedSeller");
+        return;
+      }
       router.push(`/${category}`);
     }
   }, [user, router]);
