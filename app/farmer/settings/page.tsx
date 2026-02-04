@@ -56,7 +56,7 @@ export default function Page() {
 
     const credential = EmailAuthProvider.credential(
       user.email,
-      currentPassword
+      currentPassword,
     );
 
     await reauthenticateWithCredential(user, credential);
@@ -167,7 +167,7 @@ export default function Page() {
           </div>
         </div>
       ),
-      { duration: 6000 }
+      { duration: 6000 },
     );
   };
 

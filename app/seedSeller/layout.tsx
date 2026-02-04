@@ -1,15 +1,7 @@
 "use client";
 
 import { onAuthStateChanged } from "firebase/auth";
-import {
-  Home,
-  Leaf,
-  Settings,
-  PlusCircle,
-  Package,
-  MessageCircle,
-  ShoppingCart,
-} from "lucide-react";
+import { Home, Leaf, Settings, PlusCircle, Package } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -54,13 +46,13 @@ export default function LayoutPage({
 
         {/* Navigation */}
         <div className="flex gap-8 text-lg font-medium">
-          <button onClick={() => router.push("/farmer")} className={navBtn}>
+          <button onClick={() => router.push("/seedSeller")} className={navBtn}>
             <Home className="w-5 h-5" />
             Home
           </button>
 
           <button
-            onClick={() => router.push("/farmer/addProduct")}
+            onClick={() => router.push("/seedSeller/addProduct")}
             className={navBtn}
           >
             <PlusCircle className="w-5 h-5" />
@@ -68,29 +60,11 @@ export default function LayoutPage({
           </button>
 
           <button
-            onClick={() => router.push("/farmer/viewOrders")}
+            onClick={() => router.push("/seedSeller/viewOrders")}
             className={navBtn}
           >
             <Package className="w-5 h-5" />
             View Orders {len !== 0 && <strong>({len})</strong>}
-          </button>
-
-          {/* ✅ Ask Officer */}
-          <button
-            onClick={() => router.push("/farmer/askOfficer")}
-            className={navBtn}
-          >
-            <MessageCircle className="w-5 h-5" />
-            Ask Officer
-          </button>
-
-          {/* ✅ Buy Seeds */}
-          <button
-            onClick={() => router.push("/farmer/buySeeds")}
-            className={navBtn}
-          >
-            <ShoppingCart className="w-5 h-5" />
-            Buy Seeds
           </button>
 
           <button
