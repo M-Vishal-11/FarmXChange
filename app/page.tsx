@@ -38,7 +38,7 @@ export default function Home() {
 
         {/* Seed Seller */}
         <button
-          onClick={() => router.push("/login?category=seedSeller")}
+          onClick={() => router.push("/login?category=seedseller")}
           className="group w-64 h-40 rounded-3xl bg-linear-to-br from-green-500 to-emerald-600 text-white shadow-xl hover:shadow-2xl hover:scale-105 transition-all flex flex-col items-center justify-center"
         >
           <Sprout className="w-12 h-12 mb-3" />

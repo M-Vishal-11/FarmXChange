@@ -92,6 +92,9 @@ export default function SignupPage() {
       case "officer":
         router.push("/questions/agriofficers"); // questions
         break;
+      case "seedSeller":
+        router.push("/login?category=seedseller"); // login
+        break;
       default:
         router.push("/login?category=buyer"); // login
     }
